@@ -1,0 +1,4 @@
+[run]
+include = meta_form_validators/*
+omit = meta_form_validators/tests/*
+branch = 1
