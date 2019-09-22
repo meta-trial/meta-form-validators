@@ -44,6 +44,8 @@ setup(
         'edc-form-validators',
         'edc-lab',
         'edc-reportable',
+        'meta-consent',
+        'meta-screening',
     ],
     classifiers=[
         'Environment :: Web Environment',
