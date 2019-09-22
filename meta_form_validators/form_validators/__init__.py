@@ -1,1 +1,2 @@
+from .blood_results_form_validator import BloodResultsFormValidator
 from .subject_consent import SubjectConsentFormValidator
