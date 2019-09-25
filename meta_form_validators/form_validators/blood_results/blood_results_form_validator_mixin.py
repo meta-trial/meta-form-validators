@@ -29,8 +29,7 @@ class BloodResultsFormValidatorMixin(
 
     def clean(self):
         self.required_if_true(
-            any(self.field_values),
-            field_required=self.requisition_field,
+            any(self.field_values), field_required=self.requisition_field
         )
 
         if self.cleaned_data.get("is_poc") and self.cleaned_data.get("is_poc") == YES:
@@ -39,7 +38,8 @@ class BloodResultsFormValidatorMixin(
             )
         else:
             self.validate_requisition(
-                self.requisition_field, self.assay_datetime_field, *self.panels)
+                self.requisition_field, self.assay_datetime_field, *self.panels
+            )
 
         for field_name in self.field_names:
             self.required_if_not_none(
@@ -61,4 +61,5 @@ class BloodResultsFormValidatorMixin(
                 )
 
         self.validate_reportable_fields(
-            reference_list_name=self.reference_list_name, **self.extra_options)
+            reference_list_name=self.reference_list_name, **self.extra_options
+        )
