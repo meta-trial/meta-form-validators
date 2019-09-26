@@ -42,11 +42,12 @@ class BloodResultsFormValidatorMixin(
             )
 
         for field_name in self.field_names:
-            self.required_if_not_none(
-                field=field_name,
-                field_required=f"{field_name}_units",
-                field_required_evaluate_as_int=True,
-            )
+            if f"{field_name}_units" in self.cleaned_data:
+                self.required_if_not_none(
+                    field=field_name,
+                    field_required=f"{field_name}_units",
+                    field_required_evaluate_as_int=True,
+                )
             if f"{field_name}_abnormal" in self.cleaned_data:
                 self.required_if_not_none(
                     field=field_name,
