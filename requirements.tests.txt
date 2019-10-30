@@ -1,6 +1,6 @@
 edc-randomization
 edc-adverse-event
-meta-permissions
+meta-auth
 meta-labs
 meta-lists
 meta-ae
