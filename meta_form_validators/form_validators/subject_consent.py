@@ -25,9 +25,9 @@ class SubjectConsentFormValidator(FormValidator):
         self.tz = timezone("Africa/Dar_es_Salaam")
 
     def clean(self):
-        self.validate_age()
-
         self.validate_consent_datetime()
+
+        self.validate_age()
 
         self.validate_identity()
 
