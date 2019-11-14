@@ -6,6 +6,7 @@ import sys
 
 from django.conf import settings
 from django.test.runner import DiscoverRunner
+from edc_constants.constants import IGNORE
 from edc_test_utils import DefaultTestSettings
 from os.path import abspath, dirname, join
 
@@ -32,6 +33,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     SUBJECT_VISIT_MODEL=f"meta_subject.subjectvisit",
     SUBJECT_REQUISITION_MODEL=f"meta_subject.subjectrequisition",
     LIVE_SYSTEM=False,
+    EDC_NAVBAR_VERIFY_ON_LOAD=IGNORE,
     RANDOMIZATION_LIST_PATH=join(
         base_dir, app_name, "tests", "test_randomization_list.csv"),
     INSTALLED_APPS=[
@@ -44,16 +46,25 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         "django.contrib.sites",
         "django_crypto_fields.apps.AppConfig",
         "django_revision.apps.AppConfig",
+        "django_celery_beat",
+        "django_celery_results",
         "edc_auth.apps.AppConfig",
         "edc_action_item.apps.AppConfig",
         "edc_adverse_event.apps.AppConfig",
         "edc_appointment.apps.AppConfig",
         "edc_dashboard.apps.AppConfig",
+        "edc_data_manager.apps.AppConfig",
         "edc_lab.apps.AppConfig",
         "edc_prn.apps.AppConfig",
         "edc_randomization.apps.AppConfig",
         "edc_reference.apps.AppConfig",
+        "edc_identifier.apps.AppConfig",
+        "edc_export.apps.AppConfig",
+        "edc_navbar.apps.AppConfig",
+        "edc_facility.apps.AppConfig",
+        "edc_locator.apps.AppConfig",
         "edc_sites.apps.AppConfig",
+        "edc_pharmacy.apps.AppConfig",
         "edc_protocol.apps.AppConfig",
         "edc_metadata.apps.AppConfig",
         "edc_metadata_rules.apps.AppConfig",
