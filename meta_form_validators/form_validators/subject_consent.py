@@ -8,8 +8,6 @@ from edc_utils.date import to_utc
 from edc_utils.text import convert_php_dateformat
 from pytz import timezone
 
-import pdb
-
 
 class SubjectConsentFormValidator(FormValidator):
 
@@ -20,6 +18,7 @@ class SubjectConsentFormValidator(FormValidator):
         self._subject_screening = None
         self._consent_datetime = None
         self.dob = self.cleaned_data.get("dob")
+        self.gender = self.cleaned_data.get("gender")
         self.guardian_name = self.cleaned_data.get("guardian_name")
         self.screening_identifier = self.cleaned_data.get("screening_identifier")
         self.tz = timezone("Africa/Dar_es_Salaam")
@@ -28,6 +27,8 @@ class SubjectConsentFormValidator(FormValidator):
         self.validate_consent_datetime()
 
         self.validate_age()
+
+        self.validate_gender()
 
         self.validate_identity()
 
@@ -38,11 +39,16 @@ class SubjectConsentFormValidator(FormValidator):
     @property
     def consent_datetime(self):
         if not self._consent_datetime:
-            if self.add_form and not self.cleaned_data.get("consent_datetime"):
-                raise forms.ValidationError(
-                    {"consent_datetime": "This field is required."}
+            if "consent_datetime" in self.cleaned_data:
+                if self.add_form and not self.cleaned_data.get("consent_datetime"):
+                    raise forms.ValidationError(
+                        {"consent_datetime": "This field is required."}
+                    )
+                self._consent_datetime = to_utc(
+                    self.cleaned_data.get("consent_datetime")
                 )
-            self._consent_datetime = to_utc(self.cleaned_data.get("consent_datetime"))
+            else:
+                self._consent_datetime = self.instance.consent_datetime
         return self._consent_datetime
 
     @property
@@ -72,6 +78,18 @@ class SubjectConsentFormValidator(FormValidator):
                     f"not match the age at screening. "
                     f"Expected {self.subject_screening.age_in_years}. "
                     f"Got {screening_age_in_years}."
+                }
+            )
+
+    def validate_gender(self):
+        """Validate gender matches that on the screening form.
+        """
+        if self.gender != self.subject_screening.gender:
+            raise forms.ValidationError(
+                {
+                    "gender": "Gender mismatch. The gender entered does "
+                    f"not match that reported at screening. "
+                    f"Expected '{self.subject_screening.get_gender_display()}'. "
                 }
             )
 
