@@ -48,6 +48,14 @@ class BloodResultsHba1cFormValidator(BloodResultsFormValidatorMixin):
         pass
 
 
+class BloodResultsLipidFormValidator(BloodResultsFormValidatorMixin):
+
+    requisition_field = "lipid_requisition"
+    assay_datetime_field = "lipid_assay_datetime"
+    field_names = ["ldl", "hdl", "trig"]
+    panels = [chemistry_panel]
+
+
 class BloodResultsLftFormValidator(BloodResultsFormValidatorMixin):
 
     requisition_field = "lft_requisition"
